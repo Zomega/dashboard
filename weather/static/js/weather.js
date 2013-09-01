@@ -9,9 +9,19 @@
 
 
 (function() {
+  var WeatherWidget, widget1,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  $(function() {
-    return (function() {
+  WeatherWidget = (function(_super) {
+
+    __extends(WeatherWidget, _super);
+
+    function WeatherWidget() {
+      return WeatherWidget.__super__.constructor.apply(this, arguments);
+    }
+
+    WeatherWidget.prototype.update = function() {
       $.get('/weather', function(data) {
         var current;
         current = data.current;
@@ -19,8 +29,13 @@
         $('#weather .description').html(current.description);
         return $('#weather img').attr('src', current.icon);
       });
-      return setTimeout(arguments.callee, 120000);
-    })();
-  });
+      return WeatherWidget.__super__.update.apply(this, arguments);
+    };
+
+    return WeatherWidget;
+
+  })(Widget);
+
+  widget1 = new WeatherWidget($('.nextbus')[1], 10000);
 
 }).call(this);
