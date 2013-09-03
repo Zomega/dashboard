@@ -20,9 +20,10 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.            #
 ###############################################################################
 
-class WeatherWidget extends Widget
+class WeatherWidget extends @Widget
 
 	update: ()->
+		console.log "Weather Widget"
 		$.get('/weather', (data) ->
 			current = data.current
 			$('#weather .temp').html("#{current.temp}&deg;F")
@@ -32,19 +33,5 @@ class WeatherWidget extends Widget
 		)
 		super
 
-widget1 = new WeatherWidget( $('.nextbus')[1], 10000 )
-
-#$ ->
-#	(->
-#		$.get('/weather', (data) ->
-#			current = data.current
-#			$('#weather .temp').html("#{current.temp}&deg;F")
-#			$('#weather .description').html(current.description)
-#			$('#weather img').attr('src', current.icon)
-#
-#		)
-#
-#		# Update every 2 minutes
-#		setTimeout arguments.callee, 120000
-#	)()
+new WeatherWidget( $('.weather')[0], 10000 )
 		

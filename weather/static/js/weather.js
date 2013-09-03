@@ -9,7 +9,7 @@
 
 
 (function() {
-  var WeatherWidget, widget1,
+  var WeatherWidget,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -22,6 +22,7 @@
     }
 
     WeatherWidget.prototype.update = function() {
+      console.log("Weather Widget");
       $.get('/weather', function(data) {
         var current;
         current = data.current;
@@ -34,8 +35,8 @@
 
     return WeatherWidget;
 
-  })(Widget);
+  })(this.Widget);
 
-  widget1 = new WeatherWidget($('.nextbus')[1], 10000);
+  new WeatherWidget($('.weather')[0], 10000);
 
 }).call(this);

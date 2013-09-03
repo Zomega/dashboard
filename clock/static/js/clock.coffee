@@ -64,6 +64,7 @@ $ ->
 		second_hand = clock.path().attr(param).attr(hand: [0, 60, second_hand_length]).attr("stroke-width": thin_hand_width)
 		minute_hand = clock.path().attr(param).attr(hand: [0, 60, minute_hand_length]).attr("stroke-width": thick_hand_width)
 		hour_hand = clock.path().attr(param).attr(hand: [0, 12, hour_hand_length]).attr("stroke-width": thick_hand_width)
+
 		surround = clock.circle(width / 2.0, height / 2.0, (size - surround_width) / 2.0).attr(param).attr("stroke-width": surround_width)
 
 		# Keep track of the last time we updated ( -1 means that we will update for sure at first. )

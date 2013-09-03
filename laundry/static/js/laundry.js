@@ -9,14 +9,30 @@
 
 
 (function() {
+  var LaundryWidget,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  $(function() {
-    return (function() {
+  LaundryWidget = (function(_super) {
+
+    __extends(LaundryWidget, _super);
+
+    function LaundryWidget() {
+      return LaundryWidget.__super__.constructor.apply(this, arguments);
+    }
+
+    LaundryWidget.prototype.update = function() {
+      console.log("Laundry Widget");
       $.get('/laundry', function(response) {
         return console.log(JSON.stringify(response));
       });
-      return setTimeout(arguments.callee, 10000);
-    })();
-  });
+      return LaundryWidget.__super__.update.apply(this, arguments);
+    };
+
+    return LaundryWidget;
+
+  })(this.Widget);
+
+  new LaundryWidget($('.laundry')[0], 15000);
 
 }).call(this);

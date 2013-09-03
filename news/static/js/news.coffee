@@ -20,11 +20,14 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.            #
 ###############################################################################
 
-$ ->
-	(->
+class NewsWidget extends @Widget
+
+	update: ()->
+		console.log "News Widget"
 		$.get('/news', (news) ->
 			$('#news .title').html(news.title)
 		)
-		# Run every 10 seconds
-		setTimeout arguments.callee, 10000
-	)()
+		super
+
+# Run every 10 seconds
+new NewsWidget( $('.news')[0], 10000 )

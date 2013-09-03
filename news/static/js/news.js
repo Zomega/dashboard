@@ -9,14 +9,30 @@
 
 
 (function() {
+  var NewsWidget,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  $(function() {
-    return (function() {
+  NewsWidget = (function(_super) {
+
+    __extends(NewsWidget, _super);
+
+    function NewsWidget() {
+      return NewsWidget.__super__.constructor.apply(this, arguments);
+    }
+
+    NewsWidget.prototype.update = function() {
+      console.log("News Widget");
       $.get('/news', function(news) {
         return $('#news .title').html(news.title);
       });
-      return setTimeout(arguments.callee, 10000);
-    })();
-  });
+      return NewsWidget.__super__.update.apply(this, arguments);
+    };
+
+    return NewsWidget;
+
+  })(this.Widget);
+
+  new NewsWidget($('.news')[0], 10000);
 
 }).call(this);

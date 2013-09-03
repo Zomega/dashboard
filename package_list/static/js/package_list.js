@@ -9,9 +9,20 @@
 
 
 (function() {
+  var PackageListWidget,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  $(function() {
-    return (function() {
+  PackageListWidget = (function(_super) {
+
+    __extends(PackageListWidget, _super);
+
+    function PackageListWidget() {
+      return PackageListWidget.__super__.constructor.apply(this, arguments);
+    }
+
+    PackageListWidget.prototype.update = function() {
+      console.log("Package List Widget");
       $.get('/package_list', function(response) {
         var delta, format_people, format_person, more, n, split1, split2, split3;
         console.log(JSON.stringify(response));
@@ -51,8 +62,13 @@
           return $('#col3').html(format_people(response.people.slice(split2, split3)));
         }
       });
-      return setTimeout(arguments.callee, 300000);
-    })();
-  });
+      return PackageListWidget.__super__.update.apply(this, arguments);
+    };
+
+    return PackageListWidget;
+
+  })(this.Widget);
+
+  new PackageListWidget($('.package_list')[0], 10000);
 
 }).call(this);
