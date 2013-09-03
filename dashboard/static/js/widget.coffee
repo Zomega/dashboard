@@ -5,7 +5,6 @@ class Widget
 	setRefreshTime: (@refresh_time) ->
 
 	update: ->
-		console.log this
 		this.update_icon()
 		this.update_title()
 		this.update_info()
@@ -23,16 +22,16 @@ class Widget
 		setTimeout( (-> objRef.update() ), @refresh_time )
 
 	update_icon: ->
-		console.log this + "Updating Icon..."
+		return 0
 
 	update_title: ->
-		console.log "Updating Title..."
+		return 0
 
 	update_info: ->
-		console.log "Updating Information..."
+		return 0
 
 	update_panel: ->
-		console.log "Updating Panel..."
+		return 0
 
-widget0 = new Widget( $('.nextbus')[0], 15000 )
-widget0.setRefreshTime( 5000 )
+# Expose Widget so it can be used everywhere.
+@Widget = Widget

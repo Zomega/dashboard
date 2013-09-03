@@ -9,9 +9,20 @@
 
 
 (function() {
+  var NextbusWidget,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  $(function() {
-    return (function() {
+  NextbusWidget = (function(_super) {
+
+    __extends(NextbusWidget, _super);
+
+    function NextbusWidget() {
+      return NextbusWidget.__super__.constructor.apply(this, arguments);
+    }
+
+    NextbusWidget.prototype.update = function() {
+      console.log("Nextbus Widget");
       $.get('/nextbus', function(response) {
         if (response.buses.length === 0) {
           $("#nextbus .next").html("&Oslash;");
@@ -35,8 +46,13 @@
           }
         }
       });
-      return setTimeout(arguments.callee, 15000);
-    })();
-  });
+      return NextbusWidget.__super__.update.apply(this, arguments);
+    };
+
+    return NextbusWidget;
+
+  })(this.Widget);
+
+  new NextbusWidget($('.nextbus')[0], 15000);
 
 }).call(this);

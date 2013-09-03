@@ -20,8 +20,10 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.            #
 ###############################################################################
 
-$ ->
-	(->
+class NextbusWidget extends @Widget
+
+	update: ()->
+		console.log "Nextbus Widget"
 		$.get('/nextbus', (response) ->
 			if response.buses.length is 0
 				$("#nextbus .next").html("&Oslash;")
@@ -43,7 +45,7 @@ $ ->
 				else
 					$("#nextbus .third").html("")
 		)
+		super
 
-		# Run every 15 seconds
-		setTimeout( arguments.callee, 15000 )
-	)()
+# Run every 15 seconds
+new NextbusWidget( $('.nextbus')[0], 15000 )

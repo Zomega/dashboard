@@ -20,13 +20,15 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.            #
 ###############################################################################
 
-$ ->
-	(->
+class LaundryWidget extends @Widget
+
+	update: ()->
+		console.log "Laundry Widget"
 		$.get('/laundry', (response) ->
 			# For now, just print out any response we get.
 			console.log(JSON.stringify(response))
 		)
+		super
 
-		# Run every 10 seconds (for debug)
-		setTimeout arguments.callee, 10000
-	)()
+# Run every 15 seconds
+new LaundryWidget( $('.laundry')[0], 15000 )

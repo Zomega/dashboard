@@ -20,8 +20,10 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.            #
 ###############################################################################
 
-$ ->
-	(->
+class PackageListWidget extends @Widget
+
+	update: ()->
+		console.log "Package List Widget"
 		$.get('/package_list', (response) ->
 			# For now, just print out any response we get.
 			console.log(JSON.stringify(response))
@@ -52,7 +54,6 @@ $ ->
 			else
 				$('#col3').html(format_people( response.people[split2...split3] ))
 		)
+		super
 
-		# Run every 10 seconds (for debug)
-		setTimeout( arguments.callee, 300000 )
-	)()
+new PackageListWidget( $('.package_list')[0], 10000 )

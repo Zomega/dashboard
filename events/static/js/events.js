@@ -9,15 +9,31 @@
 
 
 (function() {
+  var EventsWidget,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  $(function() {
-    return (function() {
+  EventsWidget = (function(_super) {
+
+    __extends(EventsWidget, _super);
+
+    function EventsWidget() {
+      return EventsWidget.__super__.constructor.apply(this, arguments);
+    }
+
+    EventsWidget.prototype.update = function() {
+      console.log("Events Widget");
       $.get('/events', function(event) {
         $('#events .title').html(event.title);
         return $('#events .time').html(event.time);
       });
-      return setTimeout(arguments.callee, 15000);
-    })();
-  });
+      return EventsWidget.__super__.update.apply(this, arguments);
+    };
+
+    return EventsWidget;
+
+  })(this.Widget);
+
+  new EventsWidget($('.events')[0], 15000);
 
 }).call(this);

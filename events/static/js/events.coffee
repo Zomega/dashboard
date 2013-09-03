@@ -20,13 +20,15 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.            #
 ###############################################################################
 
-$ ->
-	(->
+class EventsWidget extends @Widget
+
+	update: ()->
+		console.log "Events Widget"
 		$.get('/events', (event) ->
 			$('#events .title').html(event.title)
 			$('#events .time').html(event.time)
 		)
-		
-		# Run every 15 seconds
-		setTimeout arguments.callee, 15000
-	)()
+		super
+
+# Run every 15 seconds
+new EventsWidget( $('.events')[0], 15000 )
