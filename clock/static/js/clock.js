@@ -9,109 +9,126 @@
 
 
 (function() {
+  var ClockWidget,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  $(function() {
-    var container, updateHand;
-    updateHand = function(value, total, length, hand) {
-      while (value > total) {
-        value -= total;
-      }
-      if (value === total || value === 0) {
-        return hand.animate({
-          hand: [total, total, length]
-        }, 750, "elastic", hand.attr, {
-          hand: [0, total, length]
-        });
-      } else {
-        return hand.animate({
-          hand: [value, total, length]
-        }, 750, "elastic");
-      }
-    };
-    container = $('#time #clock');
-    return container.each(function(index) {
-      var clock, height, hour_hand, hour_hand_length, html, last_hour, last_minute, last_second, minute_hand, minute_hand_length, param, second_hand, second_hand_length, size, surround, surround_width, thick_hand_width, thin_hand_width, width;
-      clock = Raphael(container[index], "100%", "100%");
-      width = $(clock.canvas.parentElement).width();
-      height = $(clock.canvas.parentElement).height();
-      size = Math.min(width, height);
-      param = {
-        stroke: "#fff",
-        "stroke-linecap": "round"
-      };
-      html = [document.getElementById("h"), document.getElementById("m"), document.getElementById("s")];
-      clock.customAttributes.hand = function(value, total, length) {
-        var a, alpha, path;
-        alpha = 360 / total * value;
-        a = (90 - alpha) * Math.PI / 180;
-        path = [["M", width / 2.0, height / 2.0], ["l", length * Math.cos(a), -1 * length * Math.sin(a)]];
-        return {
-          path: path
+  ClockWidget = (function(_super) {
+
+    __extends(ClockWidget, _super);
+
+    function ClockWidget(elem, refresh_time) {
+      var container;
+      console.log("Clock constructor...");
+      container = $('#time #clock');
+      container.each(function(index) {
+        var height, html, param, size, width;
+        this.clock = Raphael(container[index], "100%", "100%");
+        width = $(this.clock.canvas.parentElement).width();
+        height = $(this.clock.canvas.parentElement).height();
+        size = Math.min(width, height);
+        param = {
+          stroke: "#fff",
+          "stroke-linecap": "round"
         };
+        html = [document.getElementById("h"), document.getElementById("m"), document.getElementById("s")];
+        this.clock.customAttributes.hand = function(value, total, length) {
+          var a, alpha, path;
+          alpha = 360 / total * value;
+          a = (90 - alpha) * Math.PI / 180;
+          path = [["M", width / 2.0, height / 2.0], ["l", length * Math.cos(a), -1 * length * Math.sin(a)]];
+          return {
+            path: path
+          };
+        };
+        this.second_hand_length = 92.0 * size / 256.0;
+        this.minute_hand_length = 90.0 * size / 256.0;
+        this.hour_hand_length = 60.0 * size / 256.0;
+        this.surround_width = 16.0 * size / 256.0;
+        this.thick_hand_width = 16.0 * size / 256.0;
+        this.thin_hand_width = 8.0 * size / 256.0;
+        this.second_hand = this.clock.path().attr(param).attr({
+          hand: [0, 60, this.second_hand_length]
+        }).attr({
+          "stroke-width": this.thin_hand_width
+        });
+        this.minute_hand = this.clock.path().attr(param).attr({
+          hand: [0, 60, this.minute_hand_length]
+        }).attr({
+          "stroke-width": this.thick_hand_width
+        });
+        this.hour_hand = this.clock.path().attr(param).attr({
+          hand: [0, 12, this.hour_hand_length]
+        }).attr({
+          "stroke-width": this.thick_hand_width
+        });
+        this.surround = this.clock.circle(width / 2.0, height / 2.0, (size - this.surround_width) / 2.0).attr(param).attr({
+          "stroke-width": this.surround_width
+        });
+        this.last_hour = -1;
+        this.last_minute = -1;
+        return this.last_second = -1;
+      });
+      ClockWidget.__super__.constructor.call(this, elem, refresh_time);
+    }
+
+    ClockWidget.prototype.update = function() {
+      var d, days, dom, dow, hour, last_hour, last_minute, last_second, minute, month, months, second, updateHand;
+      console.log("Clock Widget");
+      updateHand = function(value, total, length, hand) {
+        while (value > total) {
+          value -= total;
+        }
+        if (value === total || value === 0) {
+          return hand.animate({
+            hand: [total, total, length]
+          }, 750, "elastic", hand.attr, {
+            hand: [0, total, length]
+          });
+        } else {
+          return hand.animate({
+            hand: [value, total, length]
+          }, 750, "elastic");
+        }
       };
-      second_hand_length = 92.0 * size / 256.0;
-      minute_hand_length = 90.0 * size / 256.0;
-      hour_hand_length = 60.0 * size / 256.0;
-      surround_width = 16.0 * size / 256.0;
-      thick_hand_width = 16.0 * size / 256.0;
-      thin_hand_width = 8.0 * size / 256.0;
-      second_hand = clock.path().attr(param).attr({
-        hand: [0, 60, second_hand_length]
-      }).attr({
-        "stroke-width": thin_hand_width
-      });
-      minute_hand = clock.path().attr(param).attr({
-        hand: [0, 60, minute_hand_length]
-      }).attr({
-        "stroke-width": thick_hand_width
-      });
-      hour_hand = clock.path().attr(param).attr({
-        hand: [0, 12, hour_hand_length]
-      }).attr({
-        "stroke-width": thick_hand_width
-      });
-      surround = clock.circle(width / 2.0, height / 2.0, (size - surround_width) / 2.0).attr(param).attr({
-        "stroke-width": surround_width
-      });
-      last_hour = -1;
-      last_minute = -1;
-      last_second = -1;
-      return (function() {
-        var d, days, dom, dow, hour, minute, month, months, second;
-        d = new Date();
-        hour = d.getHours();
-        if (hour > 12) {
-          hour -= 12;
-        }
-        minute = d.getMinutes() % 60;
-        second = d.getSeconds() % 60;
-        if (second !== last_second) {
-          updateHand(second, 60, second_hand_length, second_hand);
-          last_second = second;
-        }
-        if (minute !== last_minute) {
-          updateHand(minute, 60, minute_hand_length, minute_hand);
-          last_minute = minute;
-        }
-        if (hour !== last_hour) {
-          updateHand(hour, 12, hour_hand_length, hour_hand);
-          last_hour = hour;
-        }
-        if (minute < 10) {
-          minute = "0" + minute;
-        }
-        $('#time h1').html("" + hour + ":" + minute);
-        dow = d.getDay();
-        days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        dow = days[dow];
-        dom = d.getDate();
-        month = d.getMonth();
-        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-        month = months[month];
-        $('#time h2').html("" + dow + ", " + month + " " + dom);
-        return setTimeout(arguments.callee, 1000);
-      })();
-    });
-  });
+      d = new Date();
+      hour = d.getHours();
+      if (hour > 12) {
+        hour -= 12;
+      }
+      minute = d.getMinutes() % 60;
+      second = d.getSeconds() % 60;
+      if (second !== this.last_second) {
+        updateHand(second, 60, this.second_hand_length, this.second_hand);
+        last_second = second;
+      }
+      if (minute !== this.last_minute) {
+        updateHand(minute, 60, this.minute_hand_length, this.minute_hand);
+        last_minute = minute;
+      }
+      if (hour !== this.last_hour) {
+        updateHand(hour, 12, this.hour_hand_length, this.hour_hand);
+        last_hour = hour;
+      }
+      if (minute < 10) {
+        minute = "0" + minute;
+      }
+      $('#time h1').html("" + hour + ":" + minute);
+      dow = d.getDay();
+      days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      dow = days[dow];
+      dom = d.getDate();
+      month = d.getMonth();
+      months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+      month = months[month];
+      $('#time h2').html("" + dow + ", " + month + " " + dom);
+      return ClockWidget.__super__.update.call(this);
+    };
+
+    return ClockWidget;
+
+  })(this.Widget);
+
+  new ClockWidget($('.clock')[0], 1000);
 
 }).call(this);
