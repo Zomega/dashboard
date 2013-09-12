@@ -25,7 +25,9 @@ class NewsWidget extends @Widget
 	update: ()->
 		console.log "News Widget"
 		$.get('/news', (news) ->
-			$('#news .title').html(news.title)
+			$('#news .info-first').html(news.title)
+			$('#news .info-second').html("")
+			$('#news .icon').html("<img src=\"/static/img/BBC.png\"></img>")
 		)
 		super
 

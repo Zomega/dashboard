@@ -24,7 +24,9 @@
     NewsWidget.prototype.update = function() {
       console.log("News Widget");
       $.get('/news', function(news) {
-        return $('#news .title').html(news.title);
+        $('#news .info-first').html(news.title);
+        $('#news .info-second').html("");
+        return $('#news .icon').html("<img src=\"/static/img/BBC.png\"></img>");
       });
       return NewsWidget.__super__.update.apply(this, arguments);
     };

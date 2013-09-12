@@ -25,25 +25,24 @@ class NextbusWidget extends @Widget
 	update: ()->
 		console.log "Nextbus Widget"
 		$.get('/nextbus', (response) ->
+			$('#nextbus .icon').html("<img src=\"/static/img/bus.png\"></img>")
 			if response.buses.length is 0
-				$("#nextbus .next").html("&Oslash;")
-				$("#nextbus .second").html("No")
-				$("#nextbus .third").html("Buses")
+				$("#nextbus .info-first").html("&Oslash;")
+				$("#nextbus .info-second").html("No Buses")
 			else
 				if response.buses[0].time_till is "0"
-					$("#nextbus .next").html("Now")
+					$("#nextbus .info-first").html("Now")
 				else
-					$("#nextbus .next").html("#{response.buses[0].time_till} min")
+					$("#nextbus .info-first").html("#{response.buses[0].time_till} min")
 
-				if response.buses.length >= 2
-					$("#nextbus .second").html("#{response.buses[1].time_till} min")
-				else
-					$("#nextbus .second").html("")
+				if response.buses.length is 1
+					$("#nextbus .info-second").html("")
 
-				if response.buses.length >= 3
-					$("#nextbus .third").html("#{response.buses[2].time_till} min")
+				else if response.buses.length is 2
+					$("#nextbus .info-second").html("#{response.buses[1].time_till} min")
+
 				else
-					$("#nextbus .third").html("")
+					$("#nextbus .info-second").html("#{response.buses[1].time_till} min #{response.buses[2].time_till} min")
 		)
 		super
 

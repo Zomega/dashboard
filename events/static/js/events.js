@@ -24,8 +24,9 @@
     EventsWidget.prototype.update = function() {
       console.log("Events Widget");
       $.get('/events', function(event) {
-        $('#events .title').html(event.title);
-        return $('#events .time').html(event.time);
+        $('#events .info-first').html(event.title);
+        $('#events .info-second').html(event.time);
+        return $('#events .icon').html("<img src=\"/static/img/events.png\"></img>");
       });
       return EventsWidget.__super__.update.apply(this, arguments);
     };

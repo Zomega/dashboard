@@ -16,30 +16,10 @@
 
     Widget.prototype.update = function() {
       var objRef;
-      this.update_icon();
-      this.update_title();
-      this.update_info();
-      this.update_panel();
       objRef = this;
       return setTimeout((function() {
         return objRef.update();
       }), this.refresh_time);
-    };
-
-    Widget.prototype.update_icon = function() {
-      return 0;
-    };
-
-    Widget.prototype.update_title = function() {
-      return 0;
-    };
-
-    Widget.prototype.update_info = function() {
-      return 0;
-    };
-
-    Widget.prototype.update_panel = function() {
-      return 0;
     };
 
     return Widget;

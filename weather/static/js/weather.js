@@ -24,11 +24,10 @@
     WeatherWidget.prototype.update = function() {
       console.log("Weather Widget");
       $.get('/weather', function(data) {
-        var current;
-        current = data.current;
-        $('#weather .temp').html("" + current.temp + "&deg;F");
-        $('#weather .description').html(current.description);
-        return $('#weather img').attr('src', current.icon);
+        this.current = data.current;
+        $('#weather .info-first').html("" + this.current.temp + "&deg;F");
+        $('#weather .info-second').html(this.current.description);
+        return $('#weather .icon').html("<img src=\"" + this.current.icon + "\"></img>");
       });
       return WeatherWidget.__super__.update.apply(this, arguments);
     };

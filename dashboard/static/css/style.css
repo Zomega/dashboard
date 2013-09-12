@@ -12,13 +12,10 @@
 .widget-content3 h2{font-size:26px;font-weight:bold;}
 .widget-content-all{position:relative;width:1370px;top:10%;margin-left:auto;margin-top:10px;margin-right:10px;margin-bottom:10px;text-align:center;vertical-align:middle;}.widget-content-all h1{font-size:80px;}
 .widget-content-all h2{font-size:26px;font-weight:bold;}
-#time{background:#25aae2;}
-#weather{background:#0b9444;}
-#nextbus{background:#bf1e2e;}
-#stocks{background:#bf1e2e;}
-#events{background:#dab01c;}
-#news{background:#25aae2;}
-#package_list{background:#25aae2;}
+.blue-widget{background:#25aae2;}
+.green-widget{background:#0b9444;}
+.red-widget{background:#bf1e2e;}
+.yellow-widget{background:#dab01c;}
 .package-column{position:relative;float:left;width:33%;}
 body{background:url('../img/bg.png');overflow:hidden;}
 h1,h2,h3,h4,h5,h6{display:inline;}
