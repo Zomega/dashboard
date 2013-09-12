@@ -24,25 +24,22 @@
     NextbusWidget.prototype.update = function() {
       console.log("Nextbus Widget");
       $.get('/nextbus', function(response) {
+        $('#nextbus .icon').html("<img src=\"/static/img/bus.png\"></img>");
         if (response.buses.length === 0) {
-          $("#nextbus .next").html("&Oslash;");
-          $("#nextbus .second").html("No");
-          return $("#nextbus .third").html("Buses");
+          $("#nextbus .info-first").html("&Oslash;");
+          return $("#nextbus .info-second").html("No Buses");
         } else {
           if (response.buses[0].time_till === "0") {
-            $("#nextbus .next").html("Now");
+            $("#nextbus .info-first").html("Now");
           } else {
-            $("#nextbus .next").html("" + response.buses[0].time_till + " min");
+            $("#nextbus .info-first").html("" + response.buses[0].time_till + " min");
           }
-          if (response.buses.length >= 2) {
-            $("#nextbus .second").html("" + response.buses[1].time_till + " min");
+          if (response.buses.length === 1) {
+            return $("#nextbus .info-second").html("");
+          } else if (response.buses.length === 2) {
+            return $("#nextbus .info-second").html("" + response.buses[1].time_till + " min");
           } else {
-            $("#nextbus .second").html("");
-          }
-          if (response.buses.length >= 3) {
-            return $("#nextbus .third").html("" + response.buses[2].time_till + " min");
-          } else {
-            return $("#nextbus .third").html("");
+            return $("#nextbus .info-second").html("" + response.buses[1].time_till + " min " + response.buses[2].time_till + " min");
           }
         }
       });

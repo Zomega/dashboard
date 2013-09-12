@@ -25,13 +25,11 @@ class WeatherWidget extends @Widget
 	update: ()->
 		console.log "Weather Widget"
 		$.get('/weather', (data) ->
-			current = data.current
-			$('#weather .temp').html("#{current.temp}&deg;F")
-			$('#weather .description').html(current.description)
-			$('#weather img').attr('src', current.icon)
-
+			@current = data.current
+			$('#weather .info-first').html("#{@current.temp}&deg;F")
+			$('#weather .info-second').html(@current.description)
+			$('#weather .icon').html("<img src=\""+@current.icon+"\"></img>")
 		)
 		super
 
 new WeatherWidget( $('.weather')[0], 10000 )
-		

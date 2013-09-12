@@ -25,8 +25,9 @@ class EventsWidget extends @Widget
 	update: ()->
 		console.log "Events Widget"
 		$.get('/events', (event) ->
-			$('#events .title').html(event.title)
-			$('#events .time').html(event.time)
+			$('#events .info-first').html(event.title)
+			$('#events .info-second').html(event.time)
+			$('#events .icon').html("<img src=\"/static/img/events.png\"></img>")
 		)
 		super
 
